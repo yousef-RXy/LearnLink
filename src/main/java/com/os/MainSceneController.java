@@ -1,10 +1,16 @@
 package com.os;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class MainSceneController {
 
@@ -34,11 +40,25 @@ public class MainSceneController {
 
   @FXML
   void btnOkClicked(ActionEvent event) {
-    new Thread(() -> {
-      new TaOffice(Integer.parseInt(students.getText()),
-          Integer.parseInt(chairs.getText()),
-          Integer.parseInt(ta.getText()), this);
-    }).start();
+    try {
+      final int studentsNum = Integer.parseInt(students.getText());
+      final int chairsNum = Integer.parseInt(chairs.getText());
+      final int taNum = Integer.parseInt(ta.getText());
+      new Thread(() -> {
+        new TaOffice(studentsNum, chairsNum, taNum, this);
+      }).start();
+    } catch (Exception e) {
+      try {
+        Parent root = FXMLLoader.load(getClass().getResource("message.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Error");
+        stage.setScene(scene);
+        stage.show();
+      } catch (IOException e1) {
+        Thread.currentThread().interrupt();
+      }
+    }
   }
 
   void updateWorkingLabel(int workingNum) {
