@@ -30,7 +30,8 @@ class Student extends Thread {
           waitingMutex.release();
           Thread.sleep(RandomInt.randomInt());
           continue;
-        } else if (this.waitingCount.integer == this.chairsNum.integer && this.chairsNum.integer != 0) {
+        } else if (this.waitingCount.integer == this.chairsNum.integer + this.totalTaCount.integer
+            && this.chairsNum.integer != 0) {
           waitingMutex.release();
           Thread.sleep(RandomInt.randomInt());
           continue;
@@ -44,8 +45,8 @@ class Student extends Thread {
 
         waitingMutex.acquire();
         this.waitingCount.integer--;
+        // TaOffice.printStatus();
         waitingMutex.release();
-
         break;
       } catch (Exception e) {
         Thread.currentThread().interrupt();

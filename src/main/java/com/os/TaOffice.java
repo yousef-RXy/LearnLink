@@ -46,13 +46,13 @@ public class TaOffice {
   static void printStatus() {
     int TAsWorking = currentTaCount.integer;
     int TAsSleeping = totalTaCount.integer - currentTaCount.integer;
-    int waitingStudents = waitingCount.integer;
-    int comingStudents = remainingCount.integer - waitingCount.integer - currentTaCount.integer;
+    int waitingStudents = waitingCount.integer - totalTaCount.integer + TAsSleeping;
+    int comingStudents = remainingCount.integer - waitingStudents - currentTaCount.integer;
     int out = studentsNum.integer - remainingCount.integer;
 
     if (chairsNum.integer == 0) {
       waitingStudents = 0;
-      comingStudents += waitingCount.integer;
+      comingStudents += waitingStudents;
     }
 
     controller.updateWorkingLabel(TAsWorking);

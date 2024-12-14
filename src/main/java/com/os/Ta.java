@@ -37,13 +37,13 @@ class Ta extends Thread {
     while (true) {
       try {
         this.studentSemaphore.acquire();
-        this.taSemaphore.release();
 
         this.currentTaCountMutex.acquire();
         this.currentTaCount.integer++;
         this.currentTaCountMutex.release();
 
         Thread.sleep(RandomInt.randomInt() * 3);
+        this.taSemaphore.release();
 
         this.currentTaCountMutex.acquire();
         TaOffice.printStatus();
