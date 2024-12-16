@@ -44,20 +44,27 @@ public class MainSceneController {
       final int studentsNum = Integer.parseInt(students.getText());
       final int chairsNum = Integer.parseInt(chairs.getText());
       final int taNum = Integer.parseInt(ta.getText());
+      if (!(studentsNum > 0 && chairsNum > 0 && taNum > 0)) {
+        throw new NumberFormatException("Error");
+      }
       new Thread(() -> {
         new TaOffice(studentsNum, chairsNum, taNum, this);
       }).start();
-    } catch (Exception e) {
-      try {
-        Parent root = FXMLLoader.load(getClass().getResource("message.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setTitle("Error");
-        stage.setScene(scene);
-        stage.show();
-      } catch (IOException e1) {
-        Thread.currentThread().interrupt();
-      }
+    } catch (NumberFormatException e) {
+      showError();
+    }
+  }
+
+  void showError() {
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("message.fxml"));
+      Stage stage = new Stage();
+      Scene scene = new Scene(root);
+      stage.setTitle("Error");
+      stage.setScene(scene);
+      stage.show();
+    } catch (IOException e1) {
+      Thread.currentThread().interrupt();
     }
   }
 

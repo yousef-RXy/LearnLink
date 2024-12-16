@@ -10,10 +10,6 @@ class Ta extends Thread {
   IntWrapper totalTaCount;
   IntWrapper currentTaCount;
   IntWrapper remainingCount;
-  IntWrapper waitingCount;
-  IntWrapper chairsNum;
-  IntWrapper studentsNum;
-  // IntWrapper firstInit;
 
   Ta(Semaphore studentSemaphore,
       Semaphore taSemaphore,
@@ -26,10 +22,6 @@ class Ta extends Thread {
     this.totalTaCount = TaOffice.getTotalTaCount();
     this.currentTaCount = TaOffice.getCurrentTaCount();
     this.remainingCount = TaOffice.getRemainingCount();
-    this.waitingCount = TaOffice.getWaitingCount();
-    this.chairsNum = TaOffice.getChairsNum();
-    this.studentsNum = TaOffice.getStudentsNum();
-    // this.firstInit = TaOffice.;
   }
 
   @Override
@@ -59,7 +51,7 @@ class Ta extends Thread {
         }
         this.remainingMutex.release();
 
-      } catch (Exception e) {
+      } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       }
     }
